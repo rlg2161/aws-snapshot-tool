@@ -23,9 +23,6 @@ pip-log.txt
 #Translations
 *.mo
 
-#Mr Developer
-.mr.developer.cfg
+config.pyc
+day_report.txt
 
-/config.pyc
-/config.py
-/iam.policy

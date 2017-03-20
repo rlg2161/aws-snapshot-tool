@@ -60,7 +60,8 @@ count_errors = 0
 deletelist = []
 
 # Setup logging
-logging.basicConfig(filename=config['log_file'], level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
+logging.StreamHandler(sys.stderr)
 start_message = 'Started taking %(period)s snapshots at %(date)s' % {
     'period': period,
     'date': datetime.today().strftime('%d-%m-%Y %H:%M:%S')
@@ -103,23 +104,6 @@ else:
     else:
         conn = EC2Connection(region=region)
 
-# Connect to SNS
-if sns_arn:
-    print 'Connecting to SNS'
-    if proxyHost:
-        # proxy:
-        # using roles:
-        if aws_access_key:
-            sns = boto.sns.connect_to_region(ec2_region_name, aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key, proxy=proxyHost, proxy_port=proxyPort)
-        else:
-            sns = boto.sns.connect_to_region(ec2_region_name, proxy=proxyHost, proxy_port=proxyPort)
-    else:
-        # non proxy:
-        # using roles
-        if aws_access_key:
-            sns = boto.sns.connect_to_region(ec2_region_name, aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key)
-        else:
-            sns = boto.sns.connect_to_region(ec2_region_name)
 
 def get_resource_tags(resource_id):
     resource_tags = {}
@@ -228,11 +212,5 @@ message += "\nTotal snapshots deleted: " + str(total_deletes) + "\n"
 print '\n' + message + '\n'
 print result
 
-# SNS reporting
-if sns_arn:
-    if errmsg:
-        sns.publish(sns_arn, 'Error in processing volumes: ' + errmsg, 'Error with AWS Snapshot')
-    sns.publish(sns_arn, message, 'Finished AWS snapshotting')
 
 logging.info(result)
-
