@@ -36,6 +36,16 @@ The user that executes the script needs the following policies: see iam.policy.s
 
 Docker
 =========
-To run in Docker, you must build a new image and pass in your AWS keys as build args. Before building the image, you must go through steps 1-10 above. Instead of doing step 11, you should modify the Dockerfile to register the correct cronjobs. This entails copying `bin/snapshot-<timeframe>` to `/etc/periodic/<timeframe>` within the Dockerfile . An example build command is below (but you might want to change the image tag):
+To run in Docker, you must build a new image and pass in your AWS keys as build args. Before building the image, you must go through steps 1-10 above. Instead of doing step 11, you should modify the Dockerfile to register the correct cronjobs. This entails copying `bin/snapshot-<timeframe>` to `/etc/periodic/<timeframe>` within the Dockerfile. Crons can be added to:
+
+```
+	/etc/periodic/15min
+	/etc/periodic/hourly
+	/etc/periodic/daily
+	/etc/periodic/weekly
+	/etc/periodic/monthly
+```
+
+ An example build command is below (but you might want to change the image tag):
 
 ```docker build -t aws-snapshot-tool:1 --build-arg aws_access_key=<AWS_ACCESS_KEY> --build-arg aws_secret_key=<AWS_SECRET_KEY> .```
