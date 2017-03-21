@@ -4,9 +4,11 @@ ADD . /aws-snapshot-tool
 
 ARG aws_access_key
 ARG aws_secret_key
+ARG slack_key
 
 ENV AWS_ACCESS_KEY ${aws_access_key}
 ENV AWS_SECRET_KEY ${aws_secret_key}
+ENV SLACK_KEYSTRING ${slack_key}
 
 RUN apk update && apk add python-dev py-pip && \
     pip install --upgrade pip && \
