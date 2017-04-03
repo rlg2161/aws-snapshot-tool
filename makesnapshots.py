@@ -61,7 +61,7 @@ deletelist = []
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
-logging.StreamHandler(sys.stderr)
+logging.StreamHandler(sys.stdout)
 start_message = 'Started taking %(period)s snapshots at %(date)s' % {
     'period': period,
     'date': datetime.today().strftime('%d-%m-%Y %H:%M:%S')
