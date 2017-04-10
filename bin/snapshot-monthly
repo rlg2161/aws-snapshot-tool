@@ -1,5 +1,6 @@
 #!/bin/sh
 
 /aws-snapshot-tool/makesnapshots.py month > /aws-snapshot-tool/month_report.txt
-REPORT_CONTENT=`cat /aws-snapshot-tool/month_report.txt`
+/aws-snapshot-tool/parse_report.py /aws-snapshot-tool/month_report.txt > /aws-snapshot-tool/parsed_report.txt
+REPORT_CONTENT=`cat /aws-snapshot-tool/parsed_report.txt`
 curl -X POST -H 'Content-type: application/json' --data '{"text":"$REPORT_CONTENT"}' https://hooks.slack.com/services/$SLACK_KEYSTRING

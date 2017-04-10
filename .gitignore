@@ -25,4 +25,5 @@ pip-log.txt
 config.py
 config.pyc
 day_report.txt
+parsed_report.txt
 creds.txt
