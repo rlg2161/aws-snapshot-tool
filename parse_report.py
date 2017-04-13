@@ -36,8 +36,8 @@ def main():
     if (successfulBackup):
         job_name = "AWS Snapshot Tool " + os.environ['ENVIRONMENT']
         registry = CollectorRegistry()
-        g = Gauge('job_last_success_unixtime', 'Last time a batch job successfully finished', registry=registry)
+        g = Gauge('AWS_mongo_snapshot_job_last_success_unixtime', 'Last time a batch job successfully finished', registry=registry)
         g.set_to_current_time()
-        push_to_gateway('prometheus:9091', job=job_name, registry=registry)
+        push_to_gateway('prometheus-pushgateway-service:9091', job=job_name, registry=registry)
 
 main()
